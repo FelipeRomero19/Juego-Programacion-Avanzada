@@ -6,44 +6,55 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
-public class Bullet {
+public class Bullet extends Entidad {
 
 	private int xSpeed;
 	private int ySpeed;
 	private boolean destroyed = false;
-	private Sprite spr;
 	    
 	    public Bullet(float x, float y, int xSpeed, int ySpeed, Texture tx) {
-	    	spr = new Sprite(tx);
-	    	spr.setPosition(x, y);
+	    	super(new Sprite(tx));
+	    	getSprite().setPosition(x, y);
 	        this.xSpeed = xSpeed;
 	        this.ySpeed = ySpeed;
 	    }
+	    
+	    @Override
 	    public void update() {
-	        spr.setPosition(spr.getX()+xSpeed, spr.getY()+ySpeed);
-	        if (spr.getX() < 0 || spr.getX()+spr.getWidth() > Gdx.graphics.getWidth()) {
+	    	if(destroyed) return;
+	        getSprite().setPosition(getSprite().getX()+xSpeed, getSprite().getY()+ySpeed);
+	        if (getSprite().getX() < 0 || getSprite().getX() + getSprite().getWidth() > Gdx.graphics.getWidth()) {
 	            destroyed = true;
 	        }
-	        if (spr.getY() < 0 || spr.getY()+spr.getHeight() > Gdx.graphics.getHeight()) {
+	        if (getSprite().getY() < 0 || getSprite().getY() + getSprite().getHeight() > Gdx.graphics.getHeight()) {
 	        	destroyed = true;
 	        }
 	        
 	    }
 	    
+	    @Override
 	    public void draw(SpriteBatch batch) {
-	    	spr.draw(batch);
+	    	if(!destroyed) super.draw(batch);
 	    }
 	    
-	    public boolean checkCollision(Ball2 b2) {
-	        if(spr.getBoundingRectangle().overlaps(b2.getArea())){
-	        	// Se destruyen ambos
-	            this.destroyed = true;
-	            return true;
-	
+	    /*
+	     * comprueba colision con un dañable (ej: ball2).
+	     * si colisiona devuelve true y marca la bala como destruida.
+	     */
+	    public boolean checkCollision(Dañable d) {
+	    	if(destroyed) return false;
+	        if(d instanceof Entidad){
+	        	Entidad e = (Entidad) d;
+	            if(getSprite().getBoundingRectangle().overlaps(e.getArea())) {
+	            	this.destroyed = true;
+	            	d.daño(1);
+	            	return true;
+	            }
 	        }
 	        return false;
 	    }
 	    
-	    public boolean isDestroyed() {return destroyed;}
-	
+	    public boolean isDestroyed() {
+	        return destroyed;
+	    }
 }

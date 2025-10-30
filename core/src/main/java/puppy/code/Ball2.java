@@ -7,51 +7,60 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 
-public class Ball2 {
-	private int x;
-    private int y;
+public class Ball2 extends Entidad implements Dañable {
+
     private int xSpeed;
     private int ySpeed;
-    private Sprite spr;
+    private boolean destroyed = false;
 
     public Ball2(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
-    	spr = new Sprite(tx);
-    	this.x = x; 
+    	super(new Sprite(tx));
+    	Sprite spr = getSprite();
  	
-        //validar que borde de esfera no quede fuera
-    	if (x-size < 0) this.x = x+size;
-    	if (x+size > Gdx.graphics.getWidth())this.x = x-size;
+        // matener dentro de pantalla
+    	int px = x;
+    	if (x-size < 0) px = x+size;
+    	if (x+size > Gdx.graphics.getWidth()) px = x-size;
          
-        this.y = y;
-        //validar que borde de esfera no quede fuera
-    	if (y-size < 0) this.y = y+size;
-    	if (y+size > Gdx.graphics.getHeight())this.y = y-size;
+        int py = y; 
+    	if (y-size < 0) py = y+size;
+    	if (y+size > Gdx.graphics.getHeight()) py = y-size;
     	
-        spr.setPosition(x, y);
+        spr.setPosition(px, py);
+        spr.setBounds(px, py, size * 2, size * 2);
+        
         this.setXSpeed(xSpeed);
         this.setySpeed(ySpeed);
     }
+    
+    @Override
     public void update() {
-        x += getXSpeed();
-        y += getySpeed();
+    	if(destroyed) return;
+    	Sprite spr = getSprite();
+        float x = spr.getX() + getXSpeed();
+        float y = spr.getY() + getySpeed();
 
-        if (x+getXSpeed() < 0 || x+getXSpeed()+spr.getWidth() > Gdx.graphics.getWidth())
+        if (x < 0 || x+spr.getWidth() > Gdx.graphics.getWidth())
         	setXSpeed(getXSpeed() * -1);
-        if (y+getySpeed() < 0 || y+getySpeed()+spr.getHeight() > Gdx.graphics.getHeight())
+        if (y < 0 || y+spr.getHeight() > Gdx.graphics.getHeight())
         	setySpeed(getySpeed() * -1);
-        spr.setPosition(x, y);
+        spr.setPosition(spr.getX() + getXSpeed(), spr.getY() + getySpeed());
+    }
+
+    @Override
+    public Rectangle getArea() {
+    	return super.getArea();
     }
     
-    public Rectangle getArea() {
-    	return spr.getBoundingRectangle();
-    }
+    @Override
     public void draw(SpriteBatch batch) {
-    	spr.draw(batch);
+    	if(!destroyed) super.draw(batch);
     }
     
     public void checkCollision(Ball2 b2) {
-        if(spr.getBoundingRectangle().overlaps(b2.spr.getBoundingRectangle())){
-        	// rebote
+    	if(destroyed || b2.destroyed) return;
+        if(getArea().overlaps(b2.getArea())){
+        	// rebote simple conservando momentum aproximado
             if (getXSpeed() ==0) setXSpeed(getXSpeed() + b2.getXSpeed()/2);
             if (b2.getXSpeed() ==0) b2.setXSpeed(b2.getXSpeed() + getXSpeed()/2);
         	setXSpeed(- getXSpeed());
@@ -63,6 +72,20 @@ public class Ball2 {
             b2.setySpeed(- b2.getySpeed()); 
         }
     }
+    
+    
+    @Override
+    public boolean isDestroyed() {
+    	return destroyed;
+    }
+    
+    // implementacion de daño
+    @Override
+    public void daño(int cantidad) {
+    	// un solo golpe destruye al asteroide
+    	this.destroyed = true;
+    }
+    
 	public int getXSpeed() {
 		return xSpeed;
 	}
