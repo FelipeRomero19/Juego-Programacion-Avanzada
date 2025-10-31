@@ -6,11 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-
 public class Ball2 extends Entidad implements Dañable {
 
-    private int xSpeed;
-    private int ySpeed;
+    private float xSpeed; // Cambiado a float
+    private float ySpeed; // Cambiado a float
     private boolean destroyed = false;
 
     public Ball2(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
@@ -28,9 +27,10 @@ public class Ball2 extends Entidad implements Dañable {
     	
         spr.setPosition(px, py);
         spr.setBounds(px, py, size * 2, size * 2);
-        
-        this.setXSpeed(xSpeed);
-        this.setySpeed(ySpeed);
+
+        float factorPelota = 0.75f; // Más lento. Ajusta entre 0.2 y 0.7 según tu gusto
+        this.setXSpeed(xSpeed * factorPelota);
+        this.setySpeed(ySpeed * factorPelota);
     }
     
     @Override
@@ -86,18 +86,16 @@ public class Ball2 extends Entidad implements Dañable {
     	this.destroyed = true;
     }
     
-	public int getXSpeed() {
+	public float getXSpeed() {
 		return xSpeed;
 	}
-	public void setXSpeed(int xSpeed) {
+	public void setXSpeed(float xSpeed) {
 		this.xSpeed = xSpeed;
 	}
-	public int getySpeed() {
+	public float getySpeed() {
 		return ySpeed;
 	}
-	public void setySpeed(int ySpeed) {
+	public void setySpeed(float ySpeed) {
 		this.ySpeed = ySpeed;
 	}
-	
-    
 }

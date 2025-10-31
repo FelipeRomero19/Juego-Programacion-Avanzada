@@ -7,12 +7,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-
-
+import com.badlogic.gdx.math.Rectangle;
 
 public class Nave4 extends Entidad implements Dañable {
 	
-	private boolean destruida = false;
+    private boolean destruida = false;
     private int vidas = 3;
     private float xVel = 0;
     private float yVel = 0;
@@ -41,12 +40,15 @@ public class Nave4 extends Entidad implements Dañable {
     public void draw(SpriteBatch batch, PantallaJuego juego){
         float x =  getSprite().getX();
         float y =  getSprite().getY();
+
+        float naveVelIncremento = 0.25f; // Cambiado para ser más lento
+
         if (!herido) {
-	        // que se mueva con teclado
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) xVel--;
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) xVel++;
-        	if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) yVel--;     
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) yVel++;
+	        // Ahora (MUEVE mientras mantienes la tecla):
+                if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) xVel -= naveVelIncremento;
+                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) xVel += naveVelIncremento;
+                if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) yVel -= naveVelIncremento;     
+                if (Gdx.input.isKeyPressed(Input.Keys.UP)) yVel += naveVelIncremento;
 
 	        // que se mantenga dentro de los bordes de la ventana
 	        if (x+xVel < 0 || x+xVel+getSprite().getWidth() > Gdx.graphics.getWidth())
@@ -57,6 +59,10 @@ public class Nave4 extends Entidad implements Dañable {
 	        getSprite().setPosition(x+xVel, y+yVel);   
          
  		    getSprite().draw(batch);
+
+            // Fricción para ralentizar la nave
+            xVel *= 0.95f;
+            yVel *= 0.95f;
         } 
         else {
            getSprite().setX(getSprite().getX()+MathUtils.random(-2,2));
@@ -126,4 +132,8 @@ public class Nave4 extends Entidad implements Dañable {
 	public void setVidas(int vidas2) {
 		vidas = vidas2;
 	}
+
+    public Rectangle getBounds() {
+        return getSprite().getBoundingRectangle();
+    }
 }
