@@ -50,7 +50,7 @@ public class PantallaJuego implements Screen {
 		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav")); //
 		
 		gameMusic.setLooping(true);
-		gameMusic.setVolume(0.5f);
+		gameMusic.setVolume(game.getVolumen());
 		gameMusic.play();
 		
 	    // cargar imagen de la nave, 64x64   
@@ -92,7 +92,7 @@ public class PantallaJuego implements Screen {
 		        for (int j = 0; j < balls1.size(); j++) {
 		        	Ball2 target = balls1.get(j);
 		            if (b.checkCollision(target)) {
-		            	explosionSound.play();
+		            	explosionSound.play(game.getVolumen());
 		            	// si el asteroide quedo marcado como destruido, lo eliminamos
 		            	if(target.isDestroyed()) {
 		            		balls1.remove(j);
