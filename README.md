@@ -62,15 +62,6 @@ gradlew.bat :lwjgl3:run
 
 ---
 
-## Comandos útiles de Gradle
-
-- **build**: Compila y genera archivos del proyecto.
-- **clean**: Elimina carpetas de build.
-- **lwjgl3:run**: Ejecuta la aplicación.
-- ... (mantén los comandos útiles que ya tienes en tu README)
-
----
-
 ## Diagrama UML
 
 El diagrama UML principal del proyecto puede consultarse y descargarse desde [`documentos/UML-Juego.drawio.png`](documentos/UML-Juego.drawio.png):
