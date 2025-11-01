@@ -25,6 +25,20 @@ Proyecto realizado en Java usando LibGDX.
     
 4. Haz clic derecho y selecciona **Run File**.
 
+### Ejecución en Eclipse
+
+1. Clona el repositorio:
+    
+    ```bash
+    git clone https://github.com/FelipeRomero19/Juego-Programacion-Avanzada.git
+    ```
+2. Abre Eclipse y selecciona **File > Import...**
+3. Elige **Gradle > Existing Gradle Project** y haz clic en **Next**.
+4. Selecciona la carpeta del repositorio y termina el asistente de importación.
+5. Ve al subproyecto `lwjgl3`, expande **src/main/java** y abre el archivo  
+   `puppy.code.lwjgl3.Lwjgl3Launcher.java`.
+6. Haz clic derecho sobre el archivo y selecciona **Run As > Java Application**.
+
 ### Ejecución por terminal
 
 Puedes ejecutar el juego con Gradle usando:
@@ -63,4 +77,16 @@ El diagrama UML principal del proyecto puede consultarse y descargarse desde [`d
 
 ![Diagrama UML](documentos/UML-Juego.drawio.png)
 
+Si necesitas editar el diagrama, también está disponible el archivo fuente en formato Draw.io en la misma carpeta.
+
 ---
+
+## Sobre el proyecto
+
+Este proyecto fue generado con un template incluyendo launchers simples y una extensión de `ApplicationAdapter` que dibuja el logo de LibGDX.
+
+---
+
+## Créditos
+
+Plantilla generada con [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
