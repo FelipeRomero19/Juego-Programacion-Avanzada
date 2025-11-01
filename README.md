@@ -77,16 +77,6 @@ El diagrama UML principal del proyecto puede consultarse y descargarse desde [`d
 
 ![Diagrama UML](documentos/UML-Juego.drawio.png)
 
-Si necesitas editar el diagrama, también está disponible el archivo fuente en formato Draw.io en la misma carpeta.
 
 ---
 
-## Sobre el proyecto
-
-Este proyecto fue generado con un template incluyendo launchers simples y una extensión de `ApplicationAdapter` que dibuja el logo de LibGDX.
-
----
-
-## Créditos
-
-Plantilla generada con [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
