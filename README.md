@@ -1,33 +1,66 @@
 # SpaceNav2024
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+Proyecto realizado en Java usando LibGDX.
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
+## 🚀 Cómo ejecutar el juego
 
-## Platforms
+### Requisitos
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
+- **Java JDK 17** o superior
+- **NetBeans**, **IntelliJ IDEA** o **Eclipse**
+- **Gradle** (opcional, ya viene el wrapper)
 
-## Gradle
+### Ejecución rápida en NetBeans
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
+1. Clona el repositorio:
+    
+    ```bash
+    git clone <https://github.com/FelipeRomero19/Juego-Programacion-Avanzada.git>
+    ```
+    
+2. Abre NetBeans y selecciona **File > Open Project**, luego elige la carpeta del repositorio.
+3. Ve al subproyecto `lwjgl3`, expande **Source Packages [java]** y abre el archivo
+    
+    `puppy.code.lwjgl3.Lwjgl3Launcher.java`.
+    
+4. Haz clic derecho y selecciona **Run File**.
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
+### Ejecución por terminal
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+Puedes ejecutar el juego con Gradle usando:
+
+```bash
+./gradlew :lwjgl3:run
+```
+
+En Windows:
+
+```bash
+gradlew.bat :lwjgl3:run
+```
+
+---
+
+## Estructura del proyecto
+
+- **core**: Lógica principal del juego compartida por todas las plataformas.
+- **lwjgl3**: Plataforma principal de escritorio (antes llamada 'desktop').
+
+---
+
+## Comandos útiles de Gradle
+
+- **build**: Compila y genera archivos del proyecto.
+- **clean**: Elimina carpetas de build.
+- **lwjgl3:run**: Ejecuta la aplicación.
+- ... (mantén los comandos útiles que ya tienes en tu README)
+
+---
+
+## Diagrama UML
+
+El diagrama UML principal del proyecto puede consultarse y descargarse desde [`documentos/UML-Juego.drawio.png`](documentos/UML-Juego.drawio.png):
+
+![Diagrama UML](documentos/UML-Juego.drawio.png)
+
+---
