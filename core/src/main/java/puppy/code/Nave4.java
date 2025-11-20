@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * se separa render (draw) de lógica (update).
+ * Strategy para movimiento.
+ */
 public class Nave4 extends Entidad implements Dañable {
 	
     private boolean destruida = false;
@@ -21,64 +25,79 @@ public class Nave4 extends Entidad implements Dañable {
     private boolean herido = false;
     private int tiempoHeridoMax=50;
     private int tiempoHerido;
+    private MovementStrategy movementStrategy;
+    private PantallaJuego juego; // referencia para agregar balas
     
-    public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
+    public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala, PantallaJuego juego) {
     	super(new Sprite(tx));
     	this.sonidoHerido = soundChoque;
     	this.soundBala = soundBala;
     	this.txBala = txBala;
+    	this.juego = juego;
     	getSprite().setPosition(x, y);
     	getSprite().setBounds(x, y, 45, 45);
-
+    	
+    	// por defecto usar teclado
+    	this.movementStrategy = new KeyboardMovementStrategy(0.25f);
+    }
+    
+    //metodos para Strategy
+    public void setMovementStrategy(MovementStrategy s) { 
+    	this.movementStrategy = s; 
+    }
+    
+    //permite al strategy modificar velocidad
+    public void modXVel(float delta) { 
+    	xVel += delta; 
+    }
+    public void modYVel(float delta) { 
+    	yVel += delta; 
     }
     
     @Override
     public void update() {
-    	// logica en draw
-    }
-    
-    public void draw(SpriteBatch batch, PantallaJuego juego){
-        float x =  getSprite().getX();
-        float y =  getSprite().getY();
+    	if (!herido) {
+            // delegar movimiento al strategy (separación de responsabilidades)
+            if (movementStrategy != null) movementStrategy.move(this);
 
-        float naveVelIncremento = 0.25f; // Cambiado para ser más lento
+	        float x =  getSprite().getX();
+	        float y =  getSprite().getY();
 
-        if (!herido) {
-	        // Ahora (MUEVE mientras mantienes la tecla):
-                if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) xVel -= naveVelIncremento;
-                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) xVel += naveVelIncremento;
-                if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) yVel -= naveVelIncremento;     
-                if (Gdx.input.isKeyPressed(Input.Keys.UP)) yVel += naveVelIncremento;
-
-	        // que se mantenga dentro de los bordes de la ventana
+	        // que se mantenga dentro de los bordes de la ventana (rebote simple)
 	        if (x+xVel < 0 || x+xVel+getSprite().getWidth() > Gdx.graphics.getWidth())
 	        	xVel*=-1;
 	        if (y+yVel < 0 || y+yVel+getSprite().getHeight() > Gdx.graphics.getHeight())
 	        	yVel*=-1;
 	        
 	        getSprite().setPosition(x+xVel, y+yVel);   
-         
- 		    getSprite().draw(batch);
 
-            // Fricción para ralentizar la nave
+            // fricción
             xVel *= 0.95f;
             yVel *= 0.95f;
-        } 
-        else {
-           getSprite().setX(getSprite().getX()+MathUtils.random(-2,2));
- 		   getSprite().draw(batch); 
- 		   getSprite().setX(x);
- 		   tiempoHerido--;
- 		   if (tiempoHerido<=0) herido = false;
- 		 }
-        // disparo
+        } else {
+            // herido -> temblor
+            float oldX = getSprite().getX();
+            getSprite().setX(getSprite().getX()+MathUtils.random(-2,2));
+            // tiempo en estado herido
+ 		    tiempoHerido--;
+ 		    if (tiempoHerido<=0) herido = false;
+ 		    // restaurar posicion X exacta (solo para no desplazar indefinidamente)
+ 		    getSprite().setX(oldX);
+ 		}
+    	
+    	// disparo -> se mantiene aquí (lógica), draw solo dibuja sprite
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {         
           Bullet  bala = new Bullet(getSprite().getX()+getSprite().getWidth()/2-5,
         		  getSprite().getY()+ getSprite().getHeight()-5,0,3,txBala);
 	      juego.agregarBala(bala);
-	      soundBala.play();
+	      if (soundBala != null) soundBala.play();
         }
-       
+    }
+    
+    // draw solo dibuja
+    @Override
+    public void draw(SpriteBatch batch) {
+        getSprite().draw(batch);
     }
       
     public boolean checkCollision(Ball2 b) {
@@ -97,7 +116,7 @@ public class Nave4 extends Entidad implements Dañable {
             vidas--;
             herido = true;
   		    tiempoHerido=tiempoHeridoMax;
-  		    sonidoHerido.play();
+  		    if (sonidoHerido != null) sonidoHerido.play();
             if (vidas<=0) 
           	    destruida = true; 
             return true;
@@ -112,7 +131,7 @@ public class Nave4 extends Entidad implements Dañable {
     	this.vidas -= cantidad;
     	this.herido = true;
     	this.tiempoHerido = this.tiempoHeridoMax;
-    	sonidoHerido.play();
+    	if (sonidoHerido != null) sonidoHerido.play();
     	if(this.vidas <= 0) this.destruida = true;
     }
     

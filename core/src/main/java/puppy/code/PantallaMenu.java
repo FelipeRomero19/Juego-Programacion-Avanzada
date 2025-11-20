@@ -1,7 +1,6 @@
 package puppy.code;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,19 +13,17 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout; 
 
-public class PantallaMenu implements Screen {
+public class PantallaMenu extends BaseScreen {
     private Stage stage;
     private Skin skin;
-    private SpaceNavigation game; // <-- referencia al juego
-    private BitmapFont font;      // <-- Guarda la fuente para usarla en render
+    private BitmapFont font;
 
-    // Constructor que recibe la instancia del juego
     public PantallaMenu(SpaceNavigation game) {
-        this.game = game;
+        super(game);
     }
 
     @Override
-    public void show() {
+    protected void onShow() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
@@ -84,7 +81,7 @@ public class PantallaMenu implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    protected void onRender(float delta) {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -104,21 +101,14 @@ public class PantallaMenu implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
+    protected void onResize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
 
     @Override
-    public void pause() {}
-    @Override
-    public void resume() {}
-    @Override
-    public void hide() {}
-
-    @Override
-    public void dispose() {
+    protected void onDispose() {
         stage.dispose();
         skin.dispose();
-        
+        //font.dispose();
     }
 }

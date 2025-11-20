@@ -1,7 +1,6 @@
 package puppy.code;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,23 +13,23 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.Screen;
 
-public class PantallaGameOver implements Screen {
+public class PantallaGameOver extends BaseScreen {
 
-    private SpaceNavigation game;
     private OrthographicCamera camera;
     private Stage stage;
     private Skin skin;
     private BitmapFont font;
 
     public PantallaGameOver(SpaceNavigation game) {
-        this.game = game;
+        super(game);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1200, 800);
     }
 
     @Override
-    public void show() {
+    protected void onShow() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
@@ -55,7 +54,7 @@ public class PantallaGameOver implements Screen {
         jugarDeNuevo.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Screen ss = new PantallaJuego(game, 1, 3, 0, 1, 1, 10);
+                Screen ss = new PantallaJuego(game, 1, 3, 0, 1, 1, 10); 
                 ss.resize(1200, 800);
                 game.setScreen(ss);
                 dispose();
@@ -78,7 +77,7 @@ public class PantallaGameOver implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    protected void onRender(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         camera.update();
@@ -92,8 +91,6 @@ public class PantallaGameOver implements Screen {
         float xCenter = (1200 - layout.width) / 2;
         font.draw(game.getBatch(), gameOverText, xCenter, 500);
 
-
-
         game.getBatch().end();
 
         stage.act(delta);
@@ -101,22 +98,14 @@ public class PantallaGameOver implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-        if (stage != null) {
-            stage.getViewport().update(width, height, true);
-        }
+    protected void onResize(int width, int height) {
+        if (stage != null) stage.getViewport().update(width, height, true);
     }
 
     @Override
-    public void pause() {}
-    @Override
-    public void resume() {}
-    @Override
-    public void hide() {}
-
-    @Override
-    public void dispose() {
+    protected void onDispose() {
         stage.dispose();
         skin.dispose();
+        //font.dispose();
     }
 }
