@@ -106,6 +106,5 @@ public class PantallaGameOver extends BaseScreen {
     protected void onDispose() {
         stage.dispose();
         skin.dispose();
-        //font.dispose();
     }
 }

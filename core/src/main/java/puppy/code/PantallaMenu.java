@@ -109,6 +109,7 @@ public class PantallaMenu extends BaseScreen {
     protected void onDispose() {
         stage.dispose();
         skin.dispose();
-        //font.dispose();
     }
+    //fix
 }
+

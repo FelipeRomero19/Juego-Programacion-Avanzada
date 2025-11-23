@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
-public class Bullet extends Entidad {
+public class Bullet extends Entidad{
 
 	private int xSpeed;
 	private int ySpeed;

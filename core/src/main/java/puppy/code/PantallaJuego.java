@@ -37,7 +37,6 @@ public class PantallaJuego extends BaseScreen {
 
     // escudo extra
     private EscudoExtra escudoExtra;
-    private float escudoExtraX, escudoExtraY;
     private int escudoExtraTamaño = 40;
     private boolean shieldActivo = false;
     private float shieldTimer = 0f;
