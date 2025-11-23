@@ -11,4 +11,5 @@ public interface EntityFactory {
     Nave4 createNave(int x, int y, Texture tx, Sound hurt, Texture txBala, Sound shotSound, PantallaJuego juego);
     Bullet createBullet(float x, float y, int vx, int vy, Texture tx);
     VidaExtra createVidaExtra(float x, float y, int tamaño, Texture tx);
+    EscudoExtra createEscudoExtra(float x, float y, int tamaño, Texture tx);
 }

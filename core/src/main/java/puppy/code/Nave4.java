@@ -27,7 +27,10 @@ public class Nave4 extends Entidad implements Dañable {
     private int tiempoHerido;
     private MovementStrategy movementStrategy;
     private PantallaJuego juego; // referencia para agregar balas
+
+    // Para soporte de escudo, referencia agregable desde PantallaJuego si se requiere visual/estado
     
+
     public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala, PantallaJuego juego) {
     	super(new Sprite(tx));
     	this.sonidoHerido = soundChoque;

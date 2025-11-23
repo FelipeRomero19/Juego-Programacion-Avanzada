@@ -42,7 +42,7 @@ public class PantallaMenu extends BaseScreen {
         style.font = font;
 
         // Botón Jugar
-        TextButton boton1 = new TextButton("Botón Jugar", style);
+        TextButton boton1 = new TextButton("Jugar", style);
         boton1.setSize(240, 60);
         boton1.setPosition(480, 500);
         boton1.addListener(new ClickListener() {

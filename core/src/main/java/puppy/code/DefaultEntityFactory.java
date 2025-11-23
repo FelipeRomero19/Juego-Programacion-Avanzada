@@ -27,4 +27,9 @@ public class DefaultEntityFactory implements EntityFactory {
     public VidaExtra createVidaExtra(float x, float y, int tamaño, Texture tx) {
         return new VidaExtra(x, y, tamaño, tx);
     }
+    
+    @Override
+    public EscudoExtra createEscudoExtra(float x, float y, int tamaño, Texture tx) {
+        return new EscudoExtra(x, y, tamaño, tx);
+    }
 }

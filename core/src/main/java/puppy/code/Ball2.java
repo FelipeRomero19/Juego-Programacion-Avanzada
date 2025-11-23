@@ -28,7 +28,7 @@ public class Ball2 extends Entidad implements Dañable {
         spr.setPosition(px, py);
         spr.setBounds(px, py, size * 2, size * 2);
 
-        float factorPelota = 0.75f; // Más lento. Ajusta entre 0.2 y 0.7 según tu gusto
+        float factorPelota = 0.45f; // Más lento. Ajustar entre 0.2 y 0.7
         this.setXSpeed(xSpeed * factorPelota);
         this.setySpeed(ySpeed * factorPelota);
     }
@@ -61,13 +61,13 @@ public class Ball2 extends Entidad implements Dañable {
     	if(destroyed || b2.destroyed) return;
         if(getArea().overlaps(b2.getArea())){
         	// rebote simple conservando momentum aproximado
-            if (getXSpeed() ==0) setXSpeed(getXSpeed() + b2.getXSpeed()/2);
-            if (b2.getXSpeed() ==0) b2.setXSpeed(b2.getXSpeed() + getXSpeed()/2);
+            if (getXSpeed() ==0) setXSpeed(getXSpeed() + b2.getXSpeed()/4);
+            if (b2.getXSpeed() ==0) b2.setXSpeed(b2.getXSpeed() + getXSpeed()/4);
         	setXSpeed(- getXSpeed());
             b2.setXSpeed(-b2.getXSpeed());
             
-            if (getySpeed() ==0) setySpeed(getySpeed() + b2.getySpeed()/2);
-            if (b2.getySpeed() ==0) b2.setySpeed(b2.getySpeed() + getySpeed()/2);
+            if (getySpeed() ==0) setySpeed(getySpeed() + b2.getySpeed()/4);
+            if (b2.getySpeed() ==0) b2.setySpeed(b2.getySpeed() + getySpeed()/4);
             setySpeed(- getySpeed());
             b2.setySpeed(- b2.getySpeed()); 
         }
