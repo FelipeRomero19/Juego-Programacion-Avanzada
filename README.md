@@ -64,9 +64,9 @@ gradlew.bat :lwjgl3:run
 
 ## Diagrama UML
 
-El diagrama UML principal del proyecto puede consultarse y descargarse desde [`documentos/UML-Juego.drawio.png`](documentos/UML-Juego.drawio.png):
+El diagrama UML principal del proyecto puede consultarse y descargarse desde [`documentos/UML-Juego.drawio.png`](documentos/UML.drawio.png):
 
-![Diagrama UML](documentos/UML-Juego.drawio.png)
+![Diagrama UML](documentos/UML.drawio.png)
 
 
 ---
